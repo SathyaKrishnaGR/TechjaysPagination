@@ -44,8 +44,8 @@ public class URLFactory {
 
 extension URLFactory {
     public func buildBaseUrl(for version: Int) -> String {
-//        return Urls.base + String(format: Urls.version, version)
-        return ""
+        print("Final URL is", Urls.init().base + String(format: Urls.init().version, version))
+        return Urls.init().base + String(format: Urls.init().version, version)
         
     }
 
