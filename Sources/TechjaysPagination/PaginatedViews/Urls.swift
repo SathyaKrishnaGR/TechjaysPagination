@@ -11,7 +11,4 @@ public struct Urls {
     var version: String
     var fayvEnvironment: String
     
-    init() {
-        
-    }
 }
