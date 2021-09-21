@@ -4,7 +4,7 @@ public struct TechjaysPagination {
         
     }
     
-    func testThisOut(baseUrl: String, version: String, environment: String) -> PaginatedTableView {
+    public func testThisOut(baseUrl: String, version: String, environment: String) -> PaginatedTableView {
         return paginatedTableView
     }
     
