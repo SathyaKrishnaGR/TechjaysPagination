@@ -64,11 +64,11 @@ extension PaginationManager {
 }
 
 @objc public class PaginationUrl: NSObject {
-    public var endpoint: String
-    public var searchQuery: String
-    public var parameters: [String: String]
+    var endpoint: String
+    var searchQuery: String
+    var parameters: [String: String]
     
-    init(endpoint: String, search: String = "", parameters: [String: String] = [:]) {
+    public init(endpoint: String, search: String = "", parameters: [String: String] = [:]) {
         self.endpoint = endpoint
         self.searchQuery = search
         self.parameters = parameters
