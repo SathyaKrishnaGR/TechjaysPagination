@@ -45,7 +45,8 @@ public class URLFactory {
 extension URLFactory {
     public func buildBaseUrl(for version: Int) -> String {
 //        return Urls.base + String(format: Urls.version, version)
-        return Urls.init(base: , version: <#T##String#>, fayvEnvironment: <#T##String#>)
+        return ""
+        
     }
 
     private func buildPathVariable(for url: String, with pathVariable: String) -> String {
