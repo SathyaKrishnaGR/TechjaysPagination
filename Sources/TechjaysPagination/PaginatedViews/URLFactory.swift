@@ -20,6 +20,7 @@ public enum QueryParam: String {
     public static let shared = URLFactory()
      public var baseUrl: String = ""
      public var version: String = ""
+     public var defaultOffset: String = ""
     
     public init() {}
     
