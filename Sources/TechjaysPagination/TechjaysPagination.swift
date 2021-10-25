@@ -1,11 +1,10 @@
 public struct TechjaysPagination {
     var paginatedTableView: PaginatedTableView!
-    public init(baseUrl: String, version: String, environment: String) {
-        
+    public static let shared = TechjaysPagination()
+    public func setupPagination(baseUrl: String, version: String, token: String) {
+        URLFactory.shared.baseUrl = baseUrl
+        URLFactory.shared.version = version
     }
-    
-    public func testThisOut(baseUrl: String, version: String, environment: String) -> PaginatedTableView {
-        return paginatedTableView
-    }
-    
 }
+
+
