@@ -44,7 +44,7 @@ public class PaginatedCollectionView: UICollectionView {
     
     /// Fetch data from server from the given offset with default fetch limit.
     /// - Parameter from: offset of the api data
-    func fetchData(from offset: Int = 0) {
+    public func fetchData(from offset: Int = 0) {
         isLoading = true
         paginationManager.paginate(to: offset) { (hasNext) in
             self.isLoading = false
