@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-@objc protocol PaginatedCollectionViewDelegate {
+@objc public protocol PaginatedCollectionViewDelegate {
     func paginatedCollectionView(paginationEndpointFor collectionView: UICollectionView) -> PaginationUrl
     func paginatedCollectionView(_ collectionView: UICollectionView, paginateTo url: String, isFirstPage: Bool, afterPagination hasNext: @escaping(_ hasNext: Bool) -> Void)
     func paginatedCollectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int
@@ -24,7 +24,7 @@ import UIKit
     @objc optional func paginationScrollViewDidScroll(_ scrollView: UIScrollView)
 }
 
-class PaginatedCollectionView: UICollectionView {
+public class PaginatedCollectionView: UICollectionView {
     @IBOutlet open weak var paginationDelegate: PaginatedCollectionViewDelegate! {
         didSet { paginationManager = PaginationManager(delegate: paginationDelegate, collectionView: self) }
     }
@@ -55,37 +55,37 @@ class PaginatedCollectionView: UICollectionView {
 
 extension PaginatedCollectionView: UICollectionViewDelegate {
     
-    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+    public func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         paginationDelegate.paginationScrollViewWillBeginDragging?(scrollView)
     }
     
-    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+    public func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         paginationDelegate.paginationScrollViewDidEndDragging?(scrollView, willDecelerate: decelerate)
     }
-    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+    public func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         paginationDelegate.paginationScrollViewDidEndDecelerating?(scrollView)
     }
     // while scrolling this delegate is being called so you may now check which direction your scrollView is being scrolled to
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+    public func scrollViewDidScroll(_ scrollView: UIScrollView) {
         paginationDelegate.paginationScrollViewDidScroll?(scrollView)
     }
     
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         paginationDelegate.paginatedCollectionView?(collectionView, didSelectItemAt: indexPath)
     }
 }
 
 extension PaginatedCollectionView: UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         dataCount = paginationDelegate.paginatedCollectionView(collectionView, numberOfItemsInSection: section)
         return dataCount
     }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         return paginationDelegate.paginatedCollectionView(collectionView, cellForItemAt: indexPath)
     }
     
-    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+    public func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         if kind == UICollectionView.elementKindSectionFooter {
             let footer = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: CollectionFooterSpinner.identifier, for: indexPath)
             return footer
@@ -93,20 +93,20 @@ extension PaginatedCollectionView: UICollectionViewDataSource {
         return UICollectionReusableView()
     }
     
-    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+    public func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         if indexPath.row == dataCount - 1, !isLoading, hasNext {
             fetchData(from: dataCount)
         }
         
         paginationDelegate.paginatedCollectionView?(collectionView, willDisplay: cell, forItemAt: indexPath)
     }
-    func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+    public func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         paginationDelegate.paginatedCollectionView?(collectionView, didEndDisplaying: cell, forItemAt: indexPath)
     }
 }
 
 extension PaginatedCollectionView: UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return paginationDelegate.paginatedCollectionView?(collectionView, layout: collectionViewLayout, sizeForItemAt: indexPath) ?? CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
     }
 }
