@@ -28,9 +28,9 @@ public class PaginatedCollectionView: UICollectionView {
     @IBOutlet open weak var paginationDelegate: PaginatedCollectionViewDelegate! {
         didSet { paginationManager = PaginationManager(delegate: paginationDelegate, collectionView: self) }
     }
-    private var paginationManager: PaginationManager!
-    private var dataCount = 0
-    private var hasNext = false
+    public var paginationManager: PaginationManager!
+    public var dataCount = 0
+    public var hasNext = false
     
     override init(frame: CGRect, collectionViewLayout layout: UICollectionViewLayout) {
         super.init(frame: frame, collectionViewLayout: layout)
